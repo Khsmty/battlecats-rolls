@@ -6,7 +6,7 @@
       type="number"
       name="seed"
       class="form-control"
-      value=<%= seed %>
+      <%- seed ? 'placeholder="seed"' : '' %>
       placeholder="シード値"
       aria-label="シード値"
       aria-describedby="seed"

@@ -10,7 +10,7 @@ app.get('/', async (req, res) => {
   if (!seed) {
     return res.render('pages/index', {
       data: false,
-      seed: '',
+      seed: null,
     });
   }
 
@@ -40,6 +40,7 @@ app.get('/', async (req, res) => {
 
   for (const roll of rolls1) {
     roll.chara = character[roll.seed2 % 18];
+    roll.score = `${String(roll.seed1).slice(-4)}, ${String(roll.seed2).slice(-2)}`;
   }
 
   for (let i = 0; i < rolls1.length; i++) {
@@ -50,9 +51,7 @@ app.get('/', async (req, res) => {
     if (i === 0) continue;
 
     if (result.chara === prev.chara) {
-      const reCharacter = character.filter(
-        (chara) => chara !== result.chara
-      );
+      const reCharacter = character.filter((chara) => chara !== result.chara);
 
       result.chara = `${result.chara} -> ${reCharacter[next.seed1 % 17]}`;
     }
@@ -78,6 +77,7 @@ app.get('/', async (req, res) => {
 
   for (const roll of rolls2) {
     roll.chara = character[roll.seed2 % 18];
+    roll.score = `${String(roll.seed1).slice(-4)}, ${String(roll.seed2).slice(-2)}`;
   }
 
   for (let i = 0; i < rolls2.length; i++) {
