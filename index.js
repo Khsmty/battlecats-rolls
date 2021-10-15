@@ -6,10 +6,12 @@ app.set('view engine', 'ejs');
 
 app.get('/', async (req, res) => {
   const seed = req.query.seed;
+  const details = req.query.details;
 
   if (!seed) {
     return res.render('pages/index', {
       data: false,
+      details: details,
       seed: null,
     });
   }
@@ -96,6 +98,7 @@ app.get('/', async (req, res) => {
 
   res.render('pages/index', {
     data: true,
+    details: details,
     seed: seed,
     resultA: rolls1,
     resultB: rolls2,
