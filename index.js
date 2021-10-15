@@ -5,23 +5,32 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.get('/', async (req, res) => {
+  const seed = req.query.seed;
+
+  if (!seed) {
+    return res.render('pages/index', {
+      data: false,
+      seed: '',
+    });
+  }
+
   const seedApi = await axios.get(
-    'https://script.google.com/macros/s/AKfycbzQwk5JI2-sqynOegsAldJd0USTSVHrJOg7u1MvW5rZfQyv4WO8QSNW93uNFDmMhaY/exec?seed=2812226865'
+    `https://script.google.com/macros/s/AKfycbzQwk5JI2-sqynOegsAldJd0USTSVHrJOg7u1MvW5rZfQyv4WO8QSNW93uNFDmMhaY/exec?seed=${seed}`
   );
   const seedTable = seedApi.data.result;
   seedTable.shift();
 
-  const rolls = [];
+  const rolls1 = [];
 
-  let next;
+  let next1;
   for (let i = 0; i < seedTable.length; i++) {
     const seed = seedTable[i];
 
     if (i % 2 === 0) {
-      next = seed;
+      next1 = seed;
     } else {
-      rolls.push({
-        seed1: next,
+      rolls1.push({
+        seed1: next1,
         seed2: seed,
       });
     }
@@ -29,26 +38,67 @@ app.get('/', async (req, res) => {
 
   const character = require('./data/normal.json');
 
-  for (const roll of rolls) {
+  for (const roll of rolls1) {
     roll.chara = character[roll.seed2 % 18];
   }
 
-  console.log(rolls);
-
-  for (let i = 0; i < rolls.length; i++) {
-    const result = rolls[i];
-    const prev = rolls[i - 1];
-    const next = rolls[i + 1];
+  for (let i = 0; i < rolls1.length; i++) {
+    const result = rolls1[i];
+    const prev = rolls1[i - 1];
+    const next = rolls1[i + 1];
 
     if (i === 0) continue;
 
     if (result.chara === prev.chara) {
-      result.chara = `${result.chara} -> ${character[next.seed1 % 18]}`;
+      const reCharacter = character.filter(
+        (chara) => chara !== result.chara
+      );
+
+      result.chara = `${result.chara} -> ${reCharacter[next.seed1 % 17]}`;
+    }
+  }
+
+  seedTable.shift();
+
+  const rolls2 = [];
+
+  let next2;
+  for (let i = 0; i < seedTable.length; i++) {
+    const seed = seedTable[i];
+
+    if (i % 2 === 0) {
+      next2 = seed;
+    } else {
+      rolls2.push({
+        seed1: next2,
+        seed2: seed,
+      });
+    }
+  }
+
+  for (const roll of rolls2) {
+    roll.chara = character[roll.seed2 % 18];
+  }
+
+  for (let i = 0; i < rolls2.length; i++) {
+    const result = rolls2[i];
+    const prev = rolls2[i - 1];
+    const next = rolls2[i + 1];
+
+    if (i === 0) continue;
+
+    if (result.chara === prev.chara) {
+      const reCharacter = character.filter((chara) => chara !== result.chara);
+
+      result.chara = `${result.chara} -> ${reCharacter[next.seed1 % 17]}`;
     }
   }
 
   res.render('pages/index', {
-    results: rolls,
+    data: true,
+    seed: seed,
+    resultA: rolls1,
+    resultB: rolls2,
   });
 });
 

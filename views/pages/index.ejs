@@ -1,11 +1,12 @@
 <%- include('../includes/header') %>
 
-<form action="/">
+<form action="/" method="get">
   <div class="input-group mb-3">
     <input
       type="number"
       name="seed"
       class="form-control"
+      value=<%= seed %>
       placeholder="シード値"
       aria-label="シード値"
       aria-describedby="seed"
@@ -14,6 +15,8 @@
   </div>
 </form>
 
+<% if (data) { %>
+<div class="text-center">
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -26,26 +29,34 @@
     </tr>
   </thead>
   <tbody>
-    <% results.forEach((result, index) => { %>
+    <% resultA.forEach((resA, index) => { %>
+      <% const resB = resultB[index]; %>
     <tr>
       <th scope="row" rowspan="2"><%- index + 1 %>A</th>
-      <td><%- result.seed1 %></td>
-      <td><%- result.score %></td>
-      <td><%- result.altScore %></td>
-      <td><%- result.altSeed %></td>
-      <% if (index === 0) { %>
-      <td><%- result.altNo %></td>
+      <td><%- resA.seed1 %></td>
+      <td><%- resA.score %></td>
+      <% if (index !== 0) { %>
+      <td><%- resB.chara %></td>
+      <td><%- resA.seed1 %></td>
+      <% } else { %>
+      <td colspan="3"></td>
       <% } %>
     </tr>
     <tr>
-      <td><%- result.seed2 %></td>
-      <td><%- result.chara %></td>
-      <td><%- result.altScore %></td>
-      <td><%- result.altSeed %></td>
-      <td scope="row" rowspan="2"><%- result.altNo %></td>
+      <td><%- resA.seed2 %></td>
+      <td><%- resA.chara %></td>
+      <% if (index !== 200) { %>
+      <td><%- resB.score %></td>
+      <td><%- resA.seed2 %></td>
+      <th scope="row" rowspan="2"><%- index + 1 %>B</td>
+      <% } else { %>
+      <td colspan="3"></td>
+      <% } %>
     </tr>
     <% }) %>
   </tbody>
 </table>
+</div>
+<% } %>
 
 <%- include('../includes/footer') %>
