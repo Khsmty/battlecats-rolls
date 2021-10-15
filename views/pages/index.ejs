@@ -1,0 +1,51 @@
+<%- include('../includes/header') %>
+
+<form action="/">
+  <div class="input-group mb-3">
+    <input
+      type="number"
+      name="seed"
+      class="form-control"
+      placeholder="シード値"
+      aria-label="シード値"
+      aria-describedby="seed"
+    />
+    <button class="btn btn-primary" id="seed">決定</button>
+  </div>
+</form>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">No.</th>
+      <th scope="col">Seed</th>
+      <th scope="col">Score, slot</th>
+      <th scope="col">Alt. score, slot</th>
+      <th scope="col">Seed</th>
+      <th scope="col">Alt. No.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.forEach((result, index) => { %>
+    <tr>
+      <th scope="row" rowspan="2"><%- index + 1 %>A</th>
+      <td><%- result.seed1 %></td>
+      <td><%- result.score %></td>
+      <td><%- result.altScore %></td>
+      <td><%- result.altSeed %></td>
+      <% if (index === 0) { %>
+      <td><%- result.altNo %></td>
+      <% } %>
+    </tr>
+    <tr>
+      <td><%- result.seed2 %></td>
+      <td><%- result.chara %></td>
+      <td><%- result.altScore %></td>
+      <td><%- result.altSeed %></td>
+      <td scope="row" rowspan="2"><%- result.altNo %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../includes/footer') %>
