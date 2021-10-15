@@ -50,12 +50,12 @@ app.get('/', async (req, res) => {
     const prev = rolls1[i - 1];
     const next = rolls1[i + 1];
 
-    if (i === 0) continue;
+    if (i === 0 || !next) continue;
 
     if (result.chara === prev.chara) {
       const reCharacter = character.filter((chara) => chara !== result.chara);
 
-      result.chara = `${result.chara} -> ${reCharacter[next.seed1 % 17]}`;
+      result.chara2 = reCharacter[next.seed1 % 17];
     }
   }
 
@@ -87,12 +87,12 @@ app.get('/', async (req, res) => {
     const prev = rolls2[i - 1];
     const next = rolls2[i + 1];
 
-    if (i === 0) continue;
+    if (i === 0 || !next) continue;
 
     if (result.chara === prev.chara) {
       const reCharacter = character.filter((chara) => chara !== result.chara);
 
-      result.chara = `${result.chara} -> ${reCharacter[next.seed1 % 17]}`;
+      result.chara2 = reCharacter[next.seed1 % 17];
     }
   }
 

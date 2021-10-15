@@ -46,7 +46,7 @@
         </thead>
         <tbody>
           <% resultA.forEach((resA, index)=> { %>
-            <% const resB=resultB[index]; %>
+            <% const resB=resultB[index], resN=resultA[index + 1]; %>
               <tr>
                 <th scope="row" rowspan="2">
                   <%- index + 1 %>A
@@ -59,7 +59,14 @@
                 </td>
                 <% if (index !==0) { %>
                   <td>
-                    <a href="<%- url.replace(seed, resA.seed1) %>"><%- resB.chara %></a>
+                    <a href="<%- url.replace(seed, resA.seed1) %>">
+                      <%- resB.chara %>
+                    </a>
+                    <% if (resB.chara2) { %>
+                      / <a href="<%- url.replace(seed, resA.seed2) %>">
+                        <%- resB.chara2 %>
+                      </a>&nbsp;<- <%=index + 2 %>A
+                        <% } %>
                   </td>
                   <td>
                     <%- resA.seed1 %>
@@ -73,7 +80,14 @@
                   <%- resA.seed2 %>
                 </td>
                 <td>
-                  <a href="<%- url.replace(seed, resA.seed2) %>"><%- resA.chara %></a>
+                  <a href="<%- url.replace(seed, resA.seed2) %>">
+                    <%- resA.chara %>
+                  </a>
+                  <% if (resA.chara2) { %>
+                    / <a href="<%- url.replace(seed, resN.seed1) %>">
+                      <%- resA.chara2 %>
+                    </a>&nbsp;-> <%= index + 1 %>B
+                      <% } %>
                 </td>
                 <% if (index !==200) { %>
                   <td>
@@ -106,7 +120,7 @@
           </thead>
           <tbody>
             <% resultA.forEach((resA, index)=> { %>
-              <% const resB=resultB[index]; %>
+              <% const resB=resultB[index], resN=resultA[index + 1]; %>
                 <tr>
                   <th scope="row" rowspan="2">
                     <%- index + 1 %>A
@@ -115,6 +129,11 @@
                     <a href="<%- url.replace(seed, resA.seed2) %>">
                       <%- resA.chara %>
                     </a>
+                    <% if (resA.chara2) { %>
+                      / <a href="<%- url.replace(seed, resN.seed1) %>">
+                        <%- resA.chara2 %>
+                      </a>&nbsp;-> <%= index + 1 %>B
+                        <% } %>
                   </td>
                   <% if (index===0) { %>
                     <td colspan="3"></td>
@@ -126,6 +145,11 @@
                       <a href="<%- url.replace(seed, resA.seed1) %>">
                         <%- resB.chara %>
                       </a>
+                      <% if (resB.chara2) { %>
+                        / <a href="<%- url.replace(seed, resA.seed2) %>">
+                          <%- resB.chara2 %>
+                        </a>&nbsp;<- <%=index + 2 %>A
+                          <% } %>
                     </td>
                     <th scope="row" rowspan="2">
                       <%- index + 1 %>B
