@@ -79,7 +79,7 @@ app.get('/', async (req, res) => {
 
   for (const roll of rolls2) {
     roll.chara = character[roll.seed2 % 18];
-    roll.score = `${String(roll.seed1).slice(-4)}, ${String(roll.seed2).slice(-2)}`;
+    roll.score = `${String(roll.seed1).slice(-4)}, ${String(roll.seed2) % 18}`;
   }
 
   for (let i = 0; i < rolls2.length; i++) {
@@ -100,6 +100,7 @@ app.get('/', async (req, res) => {
     data: true,
     details: details,
     seed: seed,
+    url: req.url,
     resultA: rolls1,
     resultB: rolls2,
   });

@@ -59,7 +59,7 @@
                 </td>
                 <% if (index !==0) { %>
                   <td>
-                    <%- resB.chara %>
+                    <a href="<%- url.replace(seed, resA.seed1) %>"><%- resB.chara %></a>
                   </td>
                   <td>
                     <%- resA.seed1 %>
@@ -73,7 +73,7 @@
                   <%- resA.seed2 %>
                 </td>
                 <td>
-                  <%- resA.chara %>
+                  <a href="<%- url.replace(seed, resA.seed2) %>"><%- resA.chara %></a>
                 </td>
                 <% if (index !==200) { %>
                   <td>
@@ -112,7 +112,9 @@
                     <%- index + 1 %>A
                   </th>
                   <td rowspan="2">
-                    <%- resA.chara %>
+                    <a href="<%- url.replace(seed, resA.seed2) %>">
+                      <%- resA.chara %>
+                    </a>
                   </td>
                   <% if (index===0) { %>
                     <td colspan="3"></td>
@@ -121,7 +123,9 @@
                 <tr>
                   <% if (index !==200) { %>
                     <td rowspan="2">
-                      <%- resB.chara %>
+                      <a href="<%- url.replace(seed, resA.seed1) %>">
+                        <%- resB.chara %>
+                      </a>
                     </td>
                     <th scope="row" rowspan="2">
                       <%- index + 1 %>B
